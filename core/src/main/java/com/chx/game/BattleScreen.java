@@ -22,17 +22,45 @@ public class BattleScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         // 友方单位生成
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             units.add(new Unit(720, 140, 80, false));
         }
 
         // 敌方单位生成
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             units.add(new Unit(80, 140, 80, true));
         }
 
         for (Unit u : units) {
-            u.update(delta);
+            boolean blocked = false;
+
+            for (Unit v : units){
+                // check if the units are blocked
+
+                if (v == u) continue;
+                // Check if the units are in the same equip
+                if (v.isEnemy == u.isEnemy){
+                    continue;
+                }else{
+                    if (u.isEnemy){
+                        if (v.x - u.x <= 20){
+                            if (v.x > u.x){
+                                blocked = true;
+                                break;
+                            }
+                        }
+                    }else{
+                        if (u.x - v.x <= 20){
+                            if (u.x > v.x){
+                                blocked = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            u.update(delta,blocked);
         }
 
         Gdx.gl.glClearColor(0.95f, 0.95f, 0.95f, 1);
