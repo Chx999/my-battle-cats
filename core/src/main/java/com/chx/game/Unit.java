@@ -13,7 +13,7 @@ public class Unit {
     }
 
     public void update(float delta) {
-        if (isEnemy) x -= speed * delta;
-        else x += speed * delta;
+        if (isEnemy) x += speed * delta;
+        else x -= speed * delta;
     }
 }
