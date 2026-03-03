@@ -43,15 +43,16 @@ public class BattleScreen extends ScreenAdapter {
                     continue;
                 }else{
                     if (u.isEnemy){
-                        if (v.x - u.x <= 20){
-                            if (v.x > u.x){
+                        if (v.x > u.x){
+                            if (v.x - u.x <= 20){
                                 blocked = true;
                                 break;
                             }
                         }
+
                     }else{
-                        if (u.x - v.x <= 20){
-                            if (u.x > v.x){
+                        if (u.x > v.x){
+                            if (u.x - v.x <= 20){
                                 blocked = true;
                                 break;
                             }
