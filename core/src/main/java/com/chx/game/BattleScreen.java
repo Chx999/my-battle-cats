@@ -21,12 +21,14 @@ public class BattleScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        // 友方单位生成
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            units.add(new Unit(80, 140, 80, false));
+            units.add(new Unit(720, 140, 80, false));
         }
 
+        // 敌方单位生成
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            units.add(new Unit(720, 140, 80, true));
+            units.add(new Unit(80, 140, 80, true));
         }
 
         for (Unit u : units) {
@@ -41,10 +43,10 @@ public class BattleScreen extends ScreenAdapter {
         sr.setColor(Color.DARK_GRAY);
         sr.rect(0, 100, 800, 5);
 
-        sr.setColor(Color.BLUE);
+        sr.setColor(Color.RED);
         sr.rect(20, 105, 40, 80);
 
-        sr.setColor(Color.RED);
+        sr.setColor(Color.BLUE);
         sr.rect(740, 105, 40, 80);
 
         for (Unit u : units) {
