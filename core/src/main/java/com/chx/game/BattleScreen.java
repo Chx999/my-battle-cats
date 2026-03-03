@@ -7,20 +7,24 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BattleScreen extends ScreenAdapter {
     private ShapeRenderer sr;
     private List<Unit> units;
+    private List<Unit> unitsToRemove;
 
     @Override
     public void show() {
         sr = new ShapeRenderer();
         units = new ArrayList<>();
+        unitsToRemove = new ArrayList<>();
     }
 
     @Override
     public void render(float delta) {
+        unitsToRemove.clear();
         // 友方单位生成
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             units.add(new Unit(720, 140, 80, false));
@@ -33,6 +37,7 @@ public class BattleScreen extends ScreenAdapter {
 
         for (Unit u : units) {
             boolean blocked = false;
+            Unit target = null;
 
             for (Unit v : units){
                 // check if the units are blocked
@@ -46,14 +51,15 @@ public class BattleScreen extends ScreenAdapter {
                         if (v.x > u.x){
                             if (v.x - u.x <= 20){
                                 blocked = true;
+                                target = v;
                                 break;
                             }
                         }
-
                     }else{
                         if (u.x > v.x){
                             if (u.x - v.x <= 20){
                                 blocked = true;
+                                target = v;
                                 break;
                             }
                         }
@@ -62,7 +68,18 @@ public class BattleScreen extends ScreenAdapter {
             }
 
             u.update(delta,blocked);
+            if (blocked && target != null && target.hp > 0){
+                u.attack(delta,target);
+            }
+
+            //Check if the units is dead
+            if (u.hp <= 0){
+                unitsToRemove.add(u);
+            }
         }
+
+        units.removeAll(unitsToRemove);
+
 
         Gdx.gl.glClearColor(0.95f, 0.95f, 0.95f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
