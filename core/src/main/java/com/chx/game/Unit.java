@@ -9,10 +9,10 @@ public class Unit {
 
     // Aboout atack
     public float scope;
-    public int hp;
-    public int atk;
-    public int attakCoolDown;
-    public int attckTimer;
+    public float hp;
+    public float atk;
+    public float attackCoolDown;
+    public float attackTimer;
 
     public Unit(float x, float y, float speed, boolean isEnemy) {
         this.x = x;
@@ -20,10 +20,10 @@ public class Unit {
         this.speed = speed;
         this.isEnemy = isEnemy;
 
-        this.hp = 10;
-        this.atk = 2;
-        this.attakCoolDown = 1;
-        this.attckTimer = 0;
+        this.hp = 10f;
+        this.atk = 2f;
+        this.attackCoolDown = 1.0f;
+        this.attackTimer = 0f;
 
 
     }
@@ -36,10 +36,10 @@ public class Unit {
     }
 
     public void attack(float delta,Unit target){
-        this.attckTimer += delta;
-        if(attckTimer >= attakCoolDown){
+        this.attackTimer += delta;
+        if(attackTimer >= attackCoolDown){
             target.hp -= atk;
-            attckTimer = 0;
+            attackTimer = 0f;
         }
     }
 }
